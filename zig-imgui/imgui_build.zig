@@ -3,7 +3,9 @@ const version: std.SemanticVersion = @import("builtin").zig_version;
 const old_pkg_structure = version.order(std.SemanticVersion.parse("0.9.1") catch unreachable) != .gt;
 
 // @src() is only allowed inside of a function, so we need this wrapper
-fn srcFile() []const u8 { return @src().file; }
+fn srcFile() []const u8 {
+    return @src().file;
+}
 const sep = std.fs.path.sep_str;
 
 const zig_imgui_path = std.fs.path.dirname(srcFile()).?;
@@ -25,7 +27,7 @@ pub fn linkWithoutPackage(exe: *std.build.LibExeObjStep) void {
     const imgui_cpp_file = zig_imgui_path ++ sep ++ "cimgui_unity.cpp";
 
     exe.linkLibCpp();
-    exe.addCSourceFile(imgui_cpp_file, &[_][]const u8 {
+    exe.addCSourceFile(imgui_cpp_file, &[_][]const u8{
         "-fno-sanitize=undefined",
         "-ffunction-sections",
     });
@@ -40,7 +42,7 @@ pub fn addTestStep(
     const test_exe = b.addTest(zig_imgui_path ++ std.fs.path.sep_str ++ "tests.zig");
     test_exe.setBuildMode(mode);
     test_exe.setTarget(target);
-    
+
     link(test_exe);
 
     const test_step = b.step(step_name, "Run zig-imgui tests");

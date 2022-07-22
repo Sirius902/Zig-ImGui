@@ -54,8 +54,8 @@ test "Compile everything" {
     // Compile instantiations of Vector
     // The skipping logic doesn't work in 0.9.1 or earlier
     if (comptime builtin.zig_version.order(std.SemanticVersion.parse("0.9.1") catch unreachable) == .gt) {
-        const skip_value_type = &[_][]const u8{ "value_type" };
-        const skip_clear_delete = skip_value_type ++ &[_][]const u8{ "clear_delete" };
+        const skip_value_type = &[_][]const u8{"value_type"};
+        const skip_clear_delete = skip_value_type ++ &[_][]const u8{"clear_delete"};
         const skip_comparisons = skip_clear_delete ++ &[_][]const u8{ "contains", "find", "find_erase", "find_erase_unsorted", "eql" };
         compileEverything(ig.Vector(ig.Vec2), skip_clear_delete);
         compileEverything(ig.Vector(*ig.Vec4), skip_value_type);

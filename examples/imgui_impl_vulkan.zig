@@ -260,7 +260,8 @@ const __glsl_shader_frag_spv = [_]u32{
 fn GetBackendData() ?*Data {
     return if (imgui.GetCurrentContext() != null)
         @ptrCast(?*Data, @alignCast(@alignOf(Data), imgui.GetIO().BackendRendererUserData))
-    else null;
+    else
+        null;
 }
 
 fn MemoryType(properties: vk.MemoryPropertyFlags, type_bits: u32) ?u32 {
@@ -1062,7 +1063,7 @@ pub fn AddTexture(sampler: vk.Sampler, image_view: vk.ImageView, image_layout: v
     const bd = GetBackendData().?;
     const v = &bd.VulkanInitInfo;
 
-    var descriptor_sets: [1]vk.DescriptorSet = .{ .Null };
+    var descriptor_sets: [1]vk.DescriptorSet = .{.Null};
     try vk.AllocateDescriptorSets(v.Device, .{
         .descriptorPool = v.DescriptorPool,
         .descriptorSetCount = 1,
